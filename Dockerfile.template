@@ -1,0 +1,7 @@
+FROM ruby:VERSION
+
+RUN gem install bundler
+
+WORKDIR /apps
+
+CMD ["bundle", "--help"]
