@@ -12,7 +12,7 @@ Usage() {
 image="alpine/bundle"
 repo="ruby/ruby"
 
-latest=`curl -s https://api.github.com/repos/${repo}/tags |jq -rS ".[].name"|awk -F "_" '{if (NF == 3 && /^v/) {gsub(/^v/,"");gsub(/_/,".");print}}' |head -1`
+latest=`curl -s -u ${API_USER}:${API_TOKEN} https://api.github.com/repos/${repo}/tags |jq -rS ".[].name"|awk -F "_" '{if (NF == 3 && /^v/) {gsub(/^v/,"");gsub(/_/,".");print}}' |head -1`
 sum=0
 echo "Lastest release is: ${latest}"
 
