@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 # Prerequisite
-# Make sure you set secret enviroment variables: DOCKER_USERNAME and  DOCKER_PASSWORD in Travis CI
+# Make sure you set secret enviroment variables in Travis CI
+# DOCKER_USERNAME
+# DOCKER_PASSWORD
+# API_TOKEN
 
 set -ex
 
@@ -12,15 +15,15 @@ Usage() {
 image="alpine/bundle"
 repo="ruby/ruby"
 
-latest=`curl -s -u ${API_USER}:${API_TOKEN} https://api.github.com/repos/${repo}/tags |jq -rS ".[].name"|awk -F "_" '{if (NF == 3 && /^v/) {gsub(/^v/,"");gsub(/_/,".");print}}' |head -1`
+latest=`curl -sL -H "Authorization: token ${API_TOKEN}" https://api.github.com/repos/${repo}/tags |jq -rS ".[].name"|awk -F "_" '{if (NF == 3 && /^v/) {gsub(/^v/,"");gsub(/_/,".");print}}' |head -1`
 sum=0
 echo "Lastest release is: ${latest}"
 
 tags=`curl -s https://hub.docker.com/v2/repositories/${image}/tags/ |jq -r .results[].name`
 
-for i in ${tags}
+for tag in ${tags}
 do
-  if [ ${i} == ${latest} ];then
+  if [ ${tag} == ${latest} ];then
     sum=$((sum+1))
   fi
 done
