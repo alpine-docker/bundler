@@ -9,7 +9,7 @@ https://github.com/alpine-docker/bundler
 
 https://travis-ci.org/alpine-docker/bundler
 
-### Docker iamge tags:
+### Docker image tags:
 
 https://hub.docker.com/r/alpine/bundle/tags/
 
